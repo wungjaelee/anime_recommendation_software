@@ -1,4 +1,4 @@
-iport numpy as np
+import numpy as np
 import csv
 import bisect
 
@@ -12,14 +12,39 @@ def load_data():
 def data_dict(data):
 	user_dict = {}
 	for row in data:
-		if user_dict.has_key(row[1]):
-			bisect.insort_left(user_dict[row[1]],row[0])
+		if np.isnan(row[0]):
+			pass
+		elif user_dict.has_key(row[0]):
+			bisect.insort_left(user_dict[row[0]],row[1])
 		else:
-			user_dict[row[1]] = [row[0]]
+			user_dict[row[0]] = [row[1]]
 	return user_dict
 
 
-def 
+def print_dict(dict):
+	counter = 1
+	for k, d in dict.iteritems():
+		print(k)
+		print(d)
+		if counter > 3:
+			break
+		counter = counter + 1
+
+
+def recommendation(dict, user):
+	best_fit = []
+	for key, value in dict.iteritems(): 
+		overlap = set(user).intersection(value)
+		item = [overlap, key]
+		best_fit.append(item)
+	sorted(best_fit)
+	print(best_fit[0][1])
+	best = dict.get(best_fit[0][1])
+	first = list(set(best)- set(user))
+
+
+	print(first)
+
 
 # def data_to_excel(user_dict):
 # 	with open('dict.csv','wb') as f:
@@ -31,6 +56,9 @@ data = load_data()
 
 dict = data_dict(data)
 
-# data_to_excel(dict)
+# print_dict(dict)
+
+user_test = [20.0, 24.0, 79.0, 226.0, 241.0, 355.0, 356.0, 442.0, 487.0, 846.0, 936.0, 1546.0, 1692.0, 1836.0, 2001.0, 2025.0, 2144.0, 2787.0, 2993.0, 3455.0, 4063.0, 4214.0, 4224.0, 4581.0, 4744.0, 4898.0, 4999.0, 5034.0, 5277.0, 5667.0, 5781.0, 5958.0, 6163.0, 6205.0, 6324.0, 6500.0, 6547.0, 6682.0, 6707.0, 6747.0, 6773.0, 6793.0, 7088.0, 7148.0, 7593.0, 7739.0, 7858.0, 8074.0, 8407.0, 8424.0, 8525.0, 8630.0, 8841.0, 9041.0, 9062.0, 9136.0, 9181.0, 9330.0, 9367.0, 9515.0, 9581.0, 9675.0, 9750.0, 9790.0, 9919.0, 10067.0, 10073.0, 10076.0, 10079.0, 10080.0, 10209.0, 10578.0, 10604.0, 10719.0, 10790.0, 10793.0, 10794.0, 10805.0, 10897.0, 11161.0, 11266.0, 11617.0, 11737.0, 11757.0, 11759.0, 11771.0, 12293.0, 12549.0, 12729.0, 13357.0, 13367.0, 13411.0, 13561.0, 13663.0, 13759.0, 14749.0, 14813.0, 14833.0, 14967.0, 15117.0, 15437.0, 15451.0, 15583.0, 15609.0, 16011.0, 16498.0, 16706.0, 17265.0, 17729.0, 18247.0, 18277.0, 18753.0, 18897.0, 19163.0, 19221.0, 19285.0, 19429.0, 19815.0, 20045.0, 20785.0, 20787.0, 21033.0, 21881.0, 22147.0, 22199.0, 22319.0, 22535.0, 22547.0, 22663.0, 22877.0, 23233.0, 23321.0, 23847.0, 24133.0, 24455.0, 24873.0, 25099.0, 25157.0, 25159.0, 25283.0, 25397.0, 26243.0, 27775.0, 27899.0, 28121.0, 28677.0, 29093.0, 29095.0, 30015.0]
 
 
+recommendation(dict, user_test)
