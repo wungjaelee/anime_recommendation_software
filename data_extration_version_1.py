@@ -4,10 +4,23 @@ import bisect
 
 
 def load_data():
-	data = np.array(np.genfromtxt('rating.csv', delimiter = ','))
-	x = data[:,0:2]
-	print(np.shape(x))
-	return x
+	user_dict = {}
+	with open("rating.csv", "rb") as f:
+		reader = csv.reader(f, delimiter = "\t")
+		for i, row in enumerate(reader):
+			if np.isnan(row[0]):
+				pass
+			elif user_dict.has_key(row[0]):
+				bisect.insort_left(user_dict[row[0]],row[1])
+			else:
+				user_dict[row[0]] = [row[1]]
+
+	return user_dict
+
+	# data = np.array(np.genfromtxt('rating.csv', delimiter = ','))
+	# x = data[:,0:2]
+	# print(np.shape(x))
+	# return x
 
 def data_dict(data):
 	user_dict = {}
@@ -52,9 +65,9 @@ def recommendation(dict, user):
 # 		w.writerows(user_dict.items())
 
 
-data = load_data()
+dict = load_data()
 
-dict = data_dict(data)
+# dict = data_dict(data)
 
 # print_dict(dict)
 
