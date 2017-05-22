@@ -1,0 +1,9 @@
+1. Take a user and the list of watched anime
+2. Vote on the genres
+3. One with highest vote -> find similar animes (about 10)
+4. Test
+
+Accuracy metric:
+Given user's list of watched anime, deduce the user's favorite genre
+Then recommend animes based on that genre up to 10
+Then use hit-10 metric to see how many animes in the recommended list the user have watched
