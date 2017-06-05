@@ -1,10 +1,12 @@
 # Anime Recommendation Software
 
 
-KNN algorithm and how it works
+We wanted to create a software that can help anime users find the next good anime to watch. As most people have experienced, after finishing a good drama, tv, or anime series, it leaves the people with longing feelings. People want recommendations similar to the animes that they have liked. So, we decided to build a system for that.
+Our data consists of one user based data that lists the animes that the user has watched, the other one lists the genres, popularity, ratings, casts, and year released.
+Initially experimenting with collaborative filtering and an attempt at figuring out which users are similar to each other resulted in accuracy of 15% after extensive experiments. Thus, we have decided to leave the users, and instead work with different anime data in constructing our recommendation system. 
 Our assumption is that a person who watched a lot of animes in the similar genres, let’s say Action and Adventure, is likely to watch animes in a similar genre. After analyzing the dataset of 12295 animes, we compiled a total of 44 different genres. We used this 44 genres as our reference vector in alphabetical order. Then for each anime, we assigned a vector of length 44 where if anime has a genre we assign 1 on the respective position and 0 otherwise.
 
-
+We considered other distance metric such as cosine similarity but we found hammington distance metric to be the most appropriate since it tells us that not only two animes need to share the same genres but also one anime belonging to additional genres that other anime does not also adds on to the difference.
 
 All genres:
 ['Action', 'Adventure', 'Cars', 'Comedy', 'Dementia', 'Demons', 'Drama', 'Ecchi', 'Fantasy', 'Game', 'Harem', 'Hentai', 'Historical', 'Horror', 'Josei', 'Kids', 'Magic', 'MartialArts', 'Mecha', 'Military', 'Music', 'Mystery', 'Parody', 'Police', 'Psychological', 'Romance', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo', 'ShoujoAi', 'Shounen', 'ShounenAi', 'SliceofLife', 'Space', 'Sports', 'SuperPower', 'Supernatural', 'Thriller', 'Vampire', 'Yaoi', 'Yuri']
@@ -17,7 +19,7 @@ The hammington distance between the following two vectors is 3, where it differs
 [1,0,0,1,0,0]
 [1,1,0,0,1,0]
  
-Figure 1: We considered other distance metric such as cosine similarity but we found hammington distance metric to be the most appropriate since it tells us that not only two animes need to share the same genres but also one anime belonging to additional genres that other anime does not also adds on to the difference.
+Figure 1: 
 
 
  
