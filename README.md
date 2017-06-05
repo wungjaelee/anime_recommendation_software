@@ -1,23 +1,11 @@
 # Anime Recommendation Software
 
 
-Note on accuracy measure:
-We have our limitations when it comes to determining the accuracy metric for the recommendation software. Companies like Netflix use its recommendation software to generate new data to test the performance. In doing so, Netflix has the isolated testing dataset available for recommendation software. For example, Netflix would give you a list of recommended shows/movies and when user clicks on it and watches it and gives rating, it would evaluate the software performance based on the difference between predicted rating and user rating. However, we cannot use the same metric because we do not use the recommendation software we made to gather new data. This imposes serious limitation on our accuracy metric because even if we split the data of users and the animes they watched into training and testing, the testing data are too arbitrary and is not based on the suggestions by recommendation software. Given enormous list of all animes out there, this approach on dividing training and testing dataset without basing it on the use of recommendation software itself seriously undermines the likelihood of accurately measuring the performance of recommendation software.
-Therefore, we decide to use alternative approach which is still limited but gives us a better sense of its performance. 
-1. Take a user and the list of watched anime
-2. Vote on the genres
-3. One with highest vote -> find similar animes (about 10)
-4. Test
- 
-Accuracy metric:
-Given user's list of watched anime, deduce the user's favorite genre
-Then recommend animes based on that genre up to 10
-Then use hit-10 metric to see how many animes in the recommended list the user have watched
- 
 KNN algorithm and how it works
 Our assumption is that a person who watched a lot of animes in the similar genres, let’s say Action and Adventure, is likely to watch animes in a similar genre. After analyzing the dataset of 12295 animes, we compiled a total of 44 different genres. We used this 44 genres as our reference vector in alphabetical order. Then for each anime, we assigned a vector of length 44 where if anime has a genre we assign 1 on the respective position and 0 otherwise.
- 
- 
+
+
+
 All genres:
 ['Action', 'Adventure', 'Cars', 'Comedy', 'Dementia', 'Demons', 'Drama', 'Ecchi', 'Fantasy', 'Game', 'Harem', 'Hentai', 'Historical', 'Horror', 'Josei', 'Kids', 'Magic', 'MartialArts', 'Mecha', 'Military', 'Music', 'Mystery', 'Parody', 'Police', 'Psychological', 'Romance', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo', 'ShoujoAi', 'Shounen', 'ShounenAi', 'SliceofLife', 'Space', 'Sports', 'SuperPower', 'Supernatural', 'Thriller', 'Vampire', 'Yaoi', 'Yuri']
 Say, an anime has genres “Action, Adventure, Fantasy.” Then the anime has a vector of
@@ -29,16 +17,39 @@ The hammington distance between the following two vectors is 3, where it differs
 [1,0,0,1,0,0]
 [1,1,0,0,1,0]
  
-(Figure)We considered other distance metric such as cosine similarity but we found hammington distance metric to be the most appropriate since it tells us that not only two animes need to share the same genres but also one anime belonging to additional genres that other anime does not also adds on to the difference.
+Figure 1: We considered other distance metric such as cosine similarity but we found hammington distance metric to be the most appropriate since it tells us that not only two animes need to share the same genres but also one anime belonging to additional genres that other anime does not also adds on to the difference.
+
+
  
-One can use our program in one of two ways.
+One can use our program in one of two ways:
 Input your favorite combination of genres
 Input the list of animes you watched so far (or selectively the ones that you liked)
+
 First method provides the 10 nearest anime to a user, additionally sorted by its rating.
 Second method finds the two favorite combination of genres that the user likes the most by voting method and use those combinations to recommend 10 nearest anime to a user, also additionally sorted by rating.
+
 KNN Performance/Accuracy
-Due to the nature of recommendation system, we had limitations on our choice of accuracy metric. In order to measure the performance/accuracy of recommendation system, we need a testing dataset acquired by using the recommendation system itself. However, this wasn’t possible because we could not acquire new dataset using our recommendation system in a given time. Thus, conventional way of dividing the original data set into training and testing data set would not be very appropriate for two reasons. First, the testing dataset doesn’t really reflect the performance of recommendation system because it was not acquired by using recommendation system. Second, given so many different animes out there that a user can watch, the chances of predicting it even with the help of recommendation system are very low and do not accurately measure the performance.
+
+
+Due to the nature of recommendation system, we had limitations on our choice of accuracy metric. Companies like Netflix use its recommendation software to generate new data to test the performance. In doing so, Netflix has the isolated testing dataset available for recommendation software. For example, Netflix would give you a list of recommended shows/movies and when user clicks on it and watches it and gives rating, it would evaluate the software performance based on the difference between predicted rating and user rating. However, we cannot use the same metric because we do not use the recommendation software we made to gather new data. This imposes serious limitation on our accuracy metric because even if we split the data of users and the animes they watched into training and testing, the testing data are too arbitrary and is not based on the suggestions by recommendation software. Given enormous list of all animes out there, this approach on dividing training and testing dataset without basing it on the use of recommendation software itself seriously undermines the likelihood of accurately measuring the performance of recommendation software.
+Therefore, we decide to use alternative approach which is still limited but gives us a better sense of its performance. 
+
+In order to measure the performance/accuracy of recommendation system, we need a testing dataset acquired by using the recommendation system itself. However, this wasn’t possible because we could not acquire new dataset using our recommendation system in a given time. Thus, conventional way of dividing the original data set into training and testing data set would not be very appropriate for two reasons. First, the testing dataset doesn’t really reflect the performance of recommendation system because it was not acquired by using recommendation system. Second, given so many different animes out there that a user can watch, the chances of predicting it even with the help of recommendation system are very low and do not accurately measure the performance.
+
 Due to these limitations, we decided to use an accuracy metric which is still limited but gives a better sense of performance. Given a list of animes that user watched, each anime in the list will vote on the combination of genres. Then we pick the top two combination of genres with the highest votes. Then using those two combination of genres, we use our KNN algorithm to pick 5 nearest animes for each combination, total of 10. Then we see how many animes out of those 10 suggested animes that the user have watched, which is our accuracy. Then we repeat the process for all the users and return the average accuracy which reflects the performance of our KNN recommendation software.
+ 
+Note on accuracy measure:
+
+1. Take a user and the list of watched anime
+2. Vote on the genres
+3. One with highest vote -> find similar animes (about 10)
+4. Test
+ 
+Accuracy metric:
+Given user's list of watched anime, deduce the user's favorite genre
+Then recommend animes based on that genre up to 10
+Then use hit-10 metric to see how many animes in the recommended list the user have watched
+ 
  
  
 [20, 24, 79, 226, 241, 355, 356, 442, 487, 846, 936, 1546, 1692, 1836, 2001, 2025, 2144, 2787, 2993, 3455, 4063, 4214, 4224, 4581, 4744, 4898, 4999, 5034, 5277, 5667, 5781, 5958, 6163, 6205, 6324, 6500, 6547, 6682, 6707, 6747, 6773, 6793, 7088, 7148, 7593, 7739, 7858, 8074, 8407, 8424, 8525, 8630, 8841, 9041, 9062, 9136, 9181, 9330, 9367, 9515, 9581, 9675, 9750, 9790, 9919, 10067, 10073, 10076, 10079, 10080, 10209, 10578, 10604, 10719, 10790, 10793, 10794, 10805, 10897, 11161, 11266, 11617, 11737, 11757, 11759, 11771, 12293, 12549, 12729, 13357, 13367, 13411, 13561, 13663, 13759, 14749, 14813, 14833, 14967, 15117, 15437, 15451, 15583, 15609, 16011, 16498, 16706, 17265, 17729, 18247, 18277, 18753, 18897, 19163, 19221, 19285, 19429, 19815, 20045, 20785, 20787, 21033, 21881, 22147, 22199, 22319, 22535, 22547, 22663, 22877, 23233, 23321, 23847, 24133, 24455, 24873, 25099, 25157, 25159, 25283, 25397, 26243, 27775, 27899, 28121, 28677, 29093, 29095, 30015], the votes on the combination of genres are following. The top two highest votes are highlighted in bold.
@@ -79,4 +90,4 @@ Due to these limitations, we decided to use an accuracy metric which is still li
 ['Drama', 'Harem', 'Psychological', 'Romance'] ---> votes: 1
 ['Comedy', 'School', 'Shounen', 'Sports'] ---> votes: 1
  
-(Figure): Here is one example of how voting works. Given a user who watched animes (in anime id) 
+Figure 2: Here is one example of how voting works. Given a user who watched animes (in anime id) 
