@@ -46,9 +46,9 @@ Second method finds the two favorite combination of genres that the user likes t
 
 ## KNN Performance/Accuracy
 
-Due to the nature of recommendation system, we had limitations on our choice of accuracy metric. Companies like Netflix use its recommendation software to generate new data to test the performance. In doing so, Netflix has the isolated testing dataset available for recommendation software. For example, Netflix would give you a list of recommended shows/movies and when user clicks on it and watches it and gives rating, it would evaluate the software performance based on the difference between predicted rating and user rating. However, we cannot use the same metric because we do not use the recommendation software we made to gather new data. This imposes serious limitation on our accuracy metric because even if we split the data of users and the animes they watched into training and testing, the testing data are too arbitrary and is not based on the suggestions by recommendation software. Given enormous list of all animes out there, this approach on dividing training and testing dataset without basing it on the use of recommendation software itself seriously undermines the likelihood of accurately measuring the performance of recommendation software. Therefore, we decide to use alternative approach which is still limited but gives us a better sense of its performance. 
+Due to the nature of recommendation system, we had limitations on our choice of accuracy metric. Companies like Netflix use its recommendation software to generate new data to test the performance. In doing so, Netflix has the isolated testing dataset available for recommendation software. For example, Netflix would give you a list of recommended shows/movies and when user clicks on it and watches it and gives rating, it would evaluate the software performance based on the difference between predicted rating and user rating. However, we cannot use the same metric because we do not use the recommendation software we made to gather new data. This imposes serious limitation on our accuracy metric.
 
-In order to measure the performance/accuracy of recommendation system, we need a testing dataset acquired by using the recommendation system itself. However, this wasn’t possible because we could not acquire new dataset using our recommendation system in a given time. Thus, conventional way of dividing the original data set into training and testing data set would not be very appropriate for two reasons. First, the testing dataset doesn’t really reflect the performance of recommendation system because it was not acquired by using recommendation system. Second, given so many different animes out there that a user can watch, the chances of predicting it even with the help of recommendation system are very low and do not accurately measure the performance.
+In order to measure the performance/accuracy of recommendation system, we need a testing dataset acquired by using the recommendation system itself. However, this wasn’t possible because we could not acquire new dataset using our recommendation system in a given time. Thus, conventional way of dividing the original data set into training and testing data set would not be very appropriate for two reasons. First, the testing dataset doesn’t really reflect the performance of recommendation system because it was not acquired by using recommendation system. Second, given so many different animes out there that a user can watch, the chances of predicting it even with the help of recommendation system are very low and do not accurately measure the performance. Therefore, we decide to use alternative approach which is still limited but gives us a better sense of its performance. 
 
 Due to these limitations, we decided to use an accuracy metric which is still limited but gives a better sense of performance. Given a list of animes that user watched, each anime in the list will vote on the combination of genres. Then we pick the top two combination of genres with the highest votes. Then using those two combination of genres, we use our KNN algorithm to pick 5 nearest animes for each combination, total of 10. Then we see how many animes out of those 10 suggested animes that the user have watched, which is our accuracy. Then we repeat the process for all the users and return the average accuracy which reflects the performance of our KNN recommendation software.
  
@@ -63,6 +63,9 @@ Note on accuracy measure:
 4. Use hit-10 metric to see how many animes in the recommended list the user have watched
 
 5. Repeat steps 1-4 for all users and give average accuracy.
+
+Result:
+accuracy: 0.496444444444  number of users: 450
  
 ### Example/Figure 2: How voting works given a user who watched animes (in anime id)
 
@@ -108,3 +111,5 @@ The votes on the combination of genres are following. The top two highest votes 
 **['Action', 'Drama', 'Fantasy', 'Shounen', 'SuperPower'] ---> votes: 3**  
 ['Drama', 'Harem', 'Psychological', 'Romance'] ---> votes: 1  
 ['Comedy', 'School', 'Shounen', 'Sports'] ---> votes: 1  
+
+## Further Work
