@@ -64,8 +64,9 @@ Note on accuracy measure:
 
 5. Repeat steps 1-4 for all users and give average accuracy.
 
-Result:
-accuracy: 0.496444444444  number of users: 450
+### Result: average accuracy and the number of users
+accuracy: 0.496444444444  number of users: 450  
+accuracy: 0.503986095017  number of users: 4315
  
 ### Example/Figure 2: How voting works given a user who watched animes (in anime id)
 
