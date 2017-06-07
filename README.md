@@ -113,3 +113,7 @@ The votes on the combination of genres are following. The top two highest votes 
 ['Comedy', 'School', 'Shounen', 'Sports'] ---> votes: 1  
 
 ## Further Work
+Our approach mainly involved using the attributes of animes such as genres, ratings, and community members.
+However, in the future, we believe that using the ratings of users on animes can greatly improve our model.
+Since in our data set most of users did not rate the animes they watched, we had difficulty using ratings as our features.  
+We will try matrix completion algorithm to fill out the missing ratings on animes. Matrix completion algorithm uses PCA technique (Principal Component Analysis) to predict the missing ratings with known ratings. It assumes that there are only handful of features that are crucial in determining whether user likes an anime or not. Thus we can use those attributes and appropriate weights to closely approximate the real ratings by users on all of the animes they watched with only few ratings given.
